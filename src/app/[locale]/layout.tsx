@@ -28,32 +28,39 @@ export async function generateMetadata(
     `https://bbscsvec.vercel.app/${locale}`,
   ];
 
-  // Use the first URL as the default (you can prioritize one over the other if needed)
-  const baseUrl = possibleBaseUrls[1]; // Prioritizing bbscsvec.vercel.app, but you can switch to [0] for bbscdev
-  const ogImageUrl = `${baseUrl}/og-image.jpg`; // Path to og-image.jpg in the public folder
+  // Use the second URL as the default (prioritizing bbscsvec.vercel.app, but you can switch to [0] for bbscdev)
+  const baseUrl = possibleBaseUrls[1]; // e.g., https://bbscsvec.vercel.app/en
+  const ogImageUrl = `${baseUrl}/og-image.jpg`; // Path to your static og-image.jpg in the public folder
 
   return {
     metadataBase: new URL(baseUrl),
-    title: 'BBSC x SVEC',
-    description: 'We inspire, innovate, and ignite creativity among students through AI',
+    title: 'BBSC x SVEC', // Matches your provided title
+    description: 'We inspire, innovate, and ignite creativity among students through AI', // Matches your provided description
     icons: {
       icon: '/favicon.ico', // Add favicon here
     },
     openGraph: {
-      title: 'BBSC x SVEC',
-      description: 'We inspire, innovate, and ignite creativity among students through AI',
-      url: baseUrl, // e.g., https://bbscsvec.vercel.app/en or https://bbscdev.vercel.app/en
-      siteName: 'BlackBox AI Student Community', // Descriptive name for your site
+      title: 'BBSC x SVEC', // Matches your provided og:title
+      description: 'We inspire, innovate, and ignite creativity among students through AI', // Matches your provided og:description
+      url: baseUrl, // e.g., https://bbscsvec.vercel.app/en (using your Vercel URL instead of demo.app)
+      siteName: 'Not Provided', // Matches your provided og:site_name
       locale: 'en_US',
       type: 'website',
       images: [
         {
-          url: ogImageUrl,
-          width: 1200,
-          height: 630,
+          url: ogImageUrl, // Points to your static og-image.jpg in the public folder
+          width: 1200, // Recommended width for OG images
+          height: 630, // Recommended height for OG images
           alt: 'BBSC x SVEC - BlackBox AI Student Community',
         },
       ],
+    },
+    twitter: {
+      card: 'summary_large_image', // Twitter card type for large images
+      title: 'BBSC x SVEC',
+      description: 'We inspire, innovate, and ignite creativity among students through AI',
+      images: [ogImageUrl], // Using your static og-image.jpg
+      creator: '@YourTwitterHandle', // Optional: Replace with your Twitter handle
     },
     robots: {
       index: true,
