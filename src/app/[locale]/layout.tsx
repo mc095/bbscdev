@@ -22,29 +22,36 @@ export async function generateMetadata(
   const t = await getTranslations();
   const { person, home } = renderContent(t);
 
-  const baseUrl = `https://${baseURL}/${locale}`;
-  const ogImageUrl = `${baseUrl}/og-image.jpg`;
+  // Define both possible base URLs for your Vercel deployments
+  const possibleBaseUrls = [
+    `https://bbscdev.vercel.app/${locale}`,
+    `https://bbscsvec.vercel.app/${locale}`,
+  ];
+
+  // Use the first URL as the default (you can prioritize one over the other if needed)
+  const baseUrl = possibleBaseUrls[1]; // Prioritizing bbscsvec.vercel.app, but you can switch to [0] for bbscdev
+  const ogImageUrl = `${baseUrl}/og-image.jpg`; // Path to og-image.jpg in the public folder
 
   return {
     metadataBase: new URL(baseUrl),
-    title: home.title,
-    description: home.description,
+    title: 'BBSC x SVEC',
+    description: 'We inspire, innovate, and ignite creativity among students through AI',
     icons: {
       icon: '/favicon.ico', // Add favicon here
     },
     openGraph: {
-      title: `We inspire, innovate, and ignite creativity among students through AI`,
+      title: 'BBSC x SVEC',
       description: 'We inspire, innovate, and ignite creativity among students through AI',
-      url: baseUrl,
-      siteName: `We inspire, innovate, and ignite creativity among students through AI`,
+      url: baseUrl, // e.g., https://bbscsvec.vercel.app/en or https://bbscdev.vercel.app/en
+      siteName: 'BlackBox AI Student Community', // Descriptive name for your site
       locale: 'en_US',
       type: 'website',
       images: [
         {
           url: ogImageUrl,
           width: 1200,
-          height: 630, 
-          alt: 'BlackBox AI Student Community X SVEC - We Design, Innovate', // Alt text for accessibility
+          height: 630,
+          alt: 'BBSC x SVEC - BlackBox AI Student Community',
         },
       ],
     },
