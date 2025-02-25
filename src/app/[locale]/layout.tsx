@@ -15,6 +15,15 @@ import { getMessages, getTranslations, unstable_setRequestLocale } from 'next-in
 import { Metadata } from "next";
 import { routing } from "@/i18n/routing";
 import { renderContent } from "@/app/resources";
+import { headers } from 'next/headers';
+
+// Helper function to get the base URL dynamically
+function getBaseUrl() {
+  const headersList = headers();
+  const host = headersList.get('host'); // e.g., localhost:3000, bbscsvec.vercel.app, bbscdev.vercel.app
+  const protocol = host?.startsWith('localhost') ? 'http' : 'https';
+  return `${protocol}://${host}`;
+}
 
 export async function generateMetadata(
   { params: { locale } }: { params: { locale: string } }
@@ -22,35 +31,35 @@ export async function generateMetadata(
   const t = await getTranslations();
   const { person, home } = renderContent(t);
 
-  // Use a single base URL as the default, prioritizing bbscsvec.vercel.app (you can switch to bbscdev if preferred)
-  const baseUrl = `https://bbscsvec.vercel.app/${locale}`; // e.g., https://bbscsvec.vercel.app/en
+  // Dynamically determine the base URL
+  const baseUrl = getBaseUrl();
   const ogImageUrl = `${baseUrl}/og-image.jpg`; // Path to your static og-image.jpg in the public folder
 
   return {
     metadataBase: new URL(baseUrl),
-    title: 'BBSC x SVEC', // Matches your provided title
-    description: 'We inspire, innovate, and ignite creativity among students through AI', // Matches your provided description
+    title: 'BBSC x SVEC',
+    description: 'We inspire, innovate, and ignite creativity among students through AI',
     icons: {
       icon: '/favicon.ico', // Add favicon here
     },
     openGraph: {
-      title: 'BBSC x SVEC', // Matches your provided og:title
-      description: 'We inspire, innovate, and ignite creativity among students through AI', // Matches your provided og:description
-      url: baseUrl, // e.g., https://bbscsvec.vercel.app/en (using your Vercel URL)
-      siteName: 'Not Provided', // Matches your provided og:site_name
-      locale: 'en_US', // Default locale as per Open Graph protocol
-      type: 'website', // Type of object, as per Open Graph protocol
+      title: 'BBSC x SVEC',
+      description: 'We inspire, innovate, and ignite creativity among students through AI',
+      url: baseUrl,
+      siteName: 'Not Provided',
+      locale: 'en_US',
+      type: 'website',
       images: [
         {
           url: ogImageUrl, // Points to your static og-image.jpg in the public folder
-          width: 1200, // Recommended width for OG images
-          height: 630, // Recommended height for OG images
-          alt: 'BBSC x SVEC - BlackBox AI Student Community', // Alt text for accessibility, as per Open Graph protocol
+          width: 1200,
+          height: 630,
+          alt: 'BBSC x SVEC - BlackBox AI Student Community',
         },
       ],
     },
     twitter: {
-      card: 'summary_large_image', // Twitter card type for large images
+      card: 'summary_large_image',
       title: 'BBSC x SVEC',
       description: 'We inspire, innovate, and ignite creativity among students through AI',
       images: [ogImageUrl], // Using your static og-image.jpg
