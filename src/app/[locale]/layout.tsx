@@ -22,14 +22,8 @@ export async function generateMetadata(
   const t = await getTranslations();
   const { person, home } = renderContent(t);
 
-  // Define both possible base URLs for your Vercel deployments
-  const possibleBaseUrls = [
-    `https://bbscdev.vercel.app/${locale}`,
-    `https://bbscsvec.vercel.app/${locale}`,
-  ];
-
-  // Use the second URL as the default (prioritizing bbscsvec.vercel.app, but you can switch to [0] for bbscdev)
-  const baseUrl = possibleBaseUrls[1]; // e.g., https://bbscsvec.vercel.app/en
+  // Use a single base URL as the default, prioritizing bbscsvec.vercel.app (you can switch to bbscdev if preferred)
+  const baseUrl = `https://bbscsvec.vercel.app/${locale}`; // e.g., https://bbscsvec.vercel.app/en
   const ogImageUrl = `${baseUrl}/og-image.jpg`; // Path to your static og-image.jpg in the public folder
 
   return {
@@ -44,14 +38,14 @@ export async function generateMetadata(
       description: 'We inspire, innovate, and ignite creativity among students through AI', // Matches your provided og:description
       url: baseUrl, // e.g., https://bbscsvec.vercel.app/en (using your Vercel URL)
       siteName: 'Not Provided', // Matches your provided og:site_name
-      locale: 'en_US',
-      type: 'website',
+      locale: 'en_US', // Default locale as per Open Graph protocol
+      type: 'website', // Type of object, as per Open Graph protocol
       images: [
         {
           url: ogImageUrl, // Points to your static og-image.jpg in the public folder
           width: 1200, // Recommended width for OG images
           height: 630, // Recommended height for OG images
-          alt: 'BBSC x SVEC - BlackBox AI Student Community',
+          alt: 'BBSC x SVEC - BlackBox AI Student Community', // Alt text for accessibility, as per Open Graph protocol
         },
       ],
     },
