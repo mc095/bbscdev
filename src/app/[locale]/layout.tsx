@@ -49,7 +49,7 @@ export async function generateMetadata(
       images: [
         {
           url: ogImageUrl, // Points to your static og-image.jpg in the public folder
-          width: 1000, // Recommended width for OG images
+          width: 1200, // Recommended width for OG images
           height: 630, // Recommended height for OG images
           alt: 'BBSC x SVEC - BlackBox AI Student Community',
         },
