@@ -15,15 +15,6 @@ import { getMessages, getTranslations, unstable_setRequestLocale } from 'next-in
 import { Metadata } from "next";
 import { routing } from "@/i18n/routing";
 import { renderContent } from "@/app/resources";
-import { headers } from 'next/headers';
-
-// Helper function to get the base URL dynamically
-function getBaseUrl() {
-  const headersList = headers();
-  const host = headersList.get('host'); // e.g., localhost:3000, bbscsvec.vercel.app, bbscdev.vercel.app
-  const protocol = host?.startsWith('localhost') ? 'http' : 'https';
-  return `${protocol}://${host}`;
-}
 
 export async function generateMetadata(
   { params: { locale } }: { params: { locale: string } }
@@ -31,8 +22,8 @@ export async function generateMetadata(
   const t = await getTranslations();
   const { person, home } = renderContent(t);
 
-  // Dynamically determine the base URL
-  const baseUrl = getBaseUrl();
+  // Use a single base URL as the default
+  const baseUrl = `https://bbscsvec.vercel.app/${locale}`; // e.g., https://bbscsvec.vercel.app/en
   const ogImageUrl = `${baseUrl}/og-image.jpg`; // Path to your static og-image.jpg in the public folder
 
   return {
