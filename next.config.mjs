@@ -1,3 +1,4 @@
+// next.config.mjs
 import mdx from '@next/mdx';
 import createNextIntlPlugin from 'next-intl/plugin';
 
@@ -28,6 +29,14 @@ const nextConfig = {
   },
   experimental: {
     typedRoutes: false,
+  },
+  async rewrites() {
+    return [
+      {
+        source: '/og-image.jpg',
+        destination: 'https://demo.app/og?title=BBSC%20x%20SVEC',
+      },
+    ];
   },
   webpack(config) {
     return config;
