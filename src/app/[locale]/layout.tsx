@@ -42,7 +42,7 @@ export async function generateMetadata(
     openGraph: {
       title: 'BBSC x SVEC', // Matches your provided og:title
       description: 'We inspire, innovate, and ignite creativity among students through AI', // Matches your provided og:description
-      url: baseUrl, // e.g., https://bbscsvec.vercel.app/en (using your Vercel URL instead of demo.app)
+      url: baseUrl, // e.g., https://bbscsvec.vercel.app/en (using your Vercel URL)
       siteName: 'Not Provided', // Matches your provided og:site_name
       locale: 'en_US',
       type: 'website',
