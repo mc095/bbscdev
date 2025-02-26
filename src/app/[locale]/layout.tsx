@@ -22,12 +22,8 @@ export async function generateMetadata(
   const t = await getTranslations();
   const { person, home } = renderContent(t);
 
-  // Use a single base URL as the default
-  const baseUrl = `https://bbscsvec.vercel.app/${locale}`; // e.g., https://bbscsvec.vercel.app/en
-  const ogImageUrl = `${baseUrl}/og-image.jpg`; // Path to your static og-image.jpg in the public folder
-
   return {
-    metadataBase: new URL(baseUrl),
+    metadataBase: new URL(`https://${baseURL}/${locale}`),
     title: 'BBSC x SVEC',
     description: 'We inspire, innovate, and ignite creativity among students through AI',
     icons: {
@@ -36,24 +32,15 @@ export async function generateMetadata(
     openGraph: {
       title: 'BBSC x SVEC',
       description: 'We inspire, innovate, and ignite creativity among students through AI',
-      url: baseUrl,
+      url: baseURL,
       siteName: 'Not Provided',
       locale: 'en_US',
-      type: 'website',
-      images: [
-        {
-          url: ogImageUrl, // Points to your static og-image.jpg in the public folder
-          width: 1200,
-          height: 630,
-          alt: 'BBSC x SVEC - BlackBox AI Student Community',
-        },
-      ],
+      type: 'website'
     },
     twitter: {
       card: 'summary_large_image',
       title: 'BBSC x SVEC',
       description: 'We inspire, innovate, and ignite creativity among students through AI',
-      images: [ogImageUrl], // Using your static og-image.jpg
       creator: '@YourTwitterHandle', // Optional: Replace with your Twitter handle
     },
     robots: {
