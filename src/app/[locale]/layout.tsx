@@ -17,8 +17,9 @@ import { routing } from "@/i18n/routing";
 import { renderContent } from "@/app/resources";
 
 export async function generateMetadata(
-  { params: { locale } }: { params: { locale: string } }
+  { params }: { params: Promise<{ locale: string }> } // Await params as a Promise
 ): Promise<Metadata> {
+  const { locale } = await params; // Await the params object
   const t = await getTranslations();
   const { person, home } = renderContent(t);
 
@@ -27,21 +28,22 @@ export async function generateMetadata(
     title: 'BBSC x SVEC',
     description: 'We inspire, innovate, and ignite creativity among students through AI',
     icons: {
-      icon: '/favicon.ico', // Add favicon here
+      icon: '/favicon.ico',
     },
     openGraph: {
       title: 'BBSC x SVEC',
       description: 'We inspire, innovate, and ignite creativity among students through AI',
       url: baseURL,
-      siteName: 'Not Provided',
+      siteName: 'BBSC X SVEC',
       locale: 'en_US',
+      images: '/og-image.jpg',
       type: 'website'
     },
     twitter: {
       card: 'summary_large_image',
       title: 'BBSC x SVEC',
       description: 'We inspire, innovate, and ignite creativity among students through AI',
-      creator: '@YourTwitterHandle', // Optional: Replace with your Twitter handle
+      creator: '@YourTwitterHandle',
     },
     robots: {
       index: true,
@@ -78,7 +80,7 @@ const code = Source_Code_Pro({
 
 interface RootLayoutProps {
   children: React.ReactNode;
-  params: { locale: string };
+  params: Promise<{ locale: string }>; // Type params as a Promise
 }
 
 export function generateStaticParams() {
@@ -87,15 +89,17 @@ export function generateStaticParams() {
 
 export default async function RootLayout({
   children,
-  params: { locale },
+  params,
 }: RootLayoutProps) {
+  const { locale } = await params; // Await the params object
   unstable_setRequestLocale(locale);
   const messages = await getMessages();
+
   return (
     <NextIntlClientProvider messages={messages}>
       <Flex
         as="html"
-        lang={locale} // Use the locale dynamically
+        lang={locale}
         background="page"
         data-neutral={style.neutral}
         data-brand={style.brand}

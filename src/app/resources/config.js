@@ -1,4 +1,4 @@
-const baseURL = 'demo.app'
+const baseURL = 'bbscdev.vercel.app'
 
 // Enable localization
 const i18n = false;

@@ -14,7 +14,7 @@ const person = {
 
 const newsletter = {
     display: true,
-    title: <>Subscribe to BBSC's Newsletter</>,
+    title: <>Subscribe to BBSC&apos;s Newsletter</>,
     description: <>Know About our new Technical Blogs today!</>
 }
 

@@ -1,10 +1,9 @@
 import { Flex, Heading } from "@/once-ui/components";
-import { useTranslations } from "next-intl";
 import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
 import StudentProfileCard from "@/components/about/StudentProfileCard";
 import styles from "@/app/[locale]/about/about.module.scss";
 import azmatimg from "@/app/[locale]/about/team/azmat.jpg";
-import rasmithaimg from "@/app/[locale]/about/team/rasmitha.jpg"; // Import avatar images directly
+import rasmithaimg from "@/app/[locale]/about/team/rasmitha.jpg";
 import sripadimg from "@/app/[locale]/about/team/sripada.jpg";
 import akashimg from "@/app/[locale]/about/team/akash.jpg";
 import jayakimg from "@/app/[locale]/about/team/jayakanth.jpg";
@@ -15,7 +14,7 @@ import supriyaimg from "@/app/[locale]/about/team/supriya.jpg";
 import vishnuimg from "@/app/[locale]/about/team/vishnu.jpg";
 import tejasimg from "@/app/[locale]/about/team/tejaswini.jpg";
 import praskimg from "@/app/[locale]/about/team/praskum.jpg";
-import madhanimg from "@/app/[locale]/about/team/madhan.jpg"; // Adjust imports based on your file structure
+import madhanimg from "@/app/[locale]/about/team/madhan.jpg";
 import fathimaimg from "@/app/[locale]/about/team/fathima.jpg";
 import ganeshimg from "@/app/[locale]/about/team/ganesh.jpg";
 import hodimg from "@/app/[locale]/about/team/Hod.jpg";
@@ -44,13 +43,14 @@ import ganeshcnt from "@/app/[locale]/about/team/ganeshcontent.jpg";
 
 const baseURL = process.env.NEXT_PUBLIC_BASE_URL || "localhost:3000";
 
-export default function StudentProfiles({
-  params: { locale },
+export default async function StudentProfiles({
+  params, // Type as Promise
 }: {
-  params: { locale: string };
+  params: Promise<{ locale: string }>; // Awaitable params
 }) {
+  const { locale } = await params; // Await params to get locale
   unstable_setRequestLocale(locale);
-  const t = useTranslations();
+  const t = await getTranslations(); // Use server-side getTranslations
 
   const students = [
     {
@@ -59,7 +59,7 @@ export default function StudentProfiles({
       github: "https://github.com/RAPARLAPRASANNAKUMAR",
       linkedin:
         "https://www.linkedin.com/in/prasanna-kumar-raparla-712a25247?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
-      avatarUrl: praskimg.src, // Directly use the imported image
+      avatarUrl: praskimg.src,
     },
     {
       name: "Sai Akash",
@@ -164,8 +164,7 @@ export default function StudentProfiles({
     {
       name: "Dr. D. Jaya Kumari",
       role: "Faculty Advisor",
-
-      avatarUrl: hodimg.src, // Directly use the imported image
+      avatarUrl: hodimg.src,
     },
     {
       name: "Tanya",
@@ -173,7 +172,7 @@ export default function StudentProfiles({
       github: "https://github.com/TanyaCoder-27",
       linkedin:
         "https://www.linkedin.com/in/andra-tulasi-lakshmi-tanya-6675b7277/",
-      avatarUrl: tanyaimg.src, // Directly use the imported image
+      avatarUrl: tanyaimg.src,
     },
     {
       name: "Sahithi",
@@ -362,29 +361,15 @@ export default function StudentProfiles({
     },
     {
       title: "Web and App Development",
-      profiles: [
-        students[7],
-        students[8],
-        students[21],
-        students[22],
-        students[23],
-        
-      ],
+      profiles: [students[7], students[8], students[21], students[22], students[23]],
     },
     {
       title: "Cloud Computing",
-      profiles: [students[9], students[24], students[25], students[26] ],
+      profiles: [students[9], students[24], students[25], students[26]],
     },
     {
       title: "Event Management",
-      profiles: [
-        students[10],
-        students[27],
-        students[28],
-        students[29],
-        students[30],
-        
-      ],
+      profiles: [students[10], students[27], students[28], students[29], students[30]],
     },
     {
       title: "Public Relations",
@@ -392,15 +377,7 @@ export default function StudentProfiles({
     },
     {
       title: "Creative Design & Social Media Management",
-      profiles: [
-        students[13],
-        students[14],
-        students[33],
-        students[34],
-        students[35],
-        
-        
-      ],
+      profiles: [students[13], students[14], students[33], students[34], students[35]],
     },
     {
       title: "Content Writing",
@@ -415,7 +392,7 @@ export default function StudentProfiles({
       direction="column"
       alignItems="center"
       padding="xl"
-      background="transparent" // Change to transparent to avoid gray background
+      background="transparent"
     >
       <Heading
         as="h1"
@@ -434,7 +411,7 @@ export default function StudentProfiles({
         >
           <Heading
             as="h1"
-            className={styles.sectionTitle} // Use CSS module class
+            className={styles.sectionTitle}
             onBackground="neutral-weak"
           >
             {section.title}
@@ -442,10 +419,10 @@ export default function StudentProfiles({
           <Flex
             wrap
             justifyContent="center"
-            gap="l" // Maintain some gap between cards
+            gap="l"
           >
             {section.profiles
-              ?.filter((student) => student) // Filters out undefined or null values
+              ?.filter((student) => student)
               .map((student, index) => (
                 <StudentProfileCard
                   key={index}
@@ -464,14 +441,15 @@ export default function StudentProfiles({
 }
 
 export async function generateMetadata({
-  params: { locale },
+  params, // Type as Promise
 }: {
-  params: { locale: string };
+  params: Promise<{ locale: string }>; // Awaitable params
 }) {
+  const { locale } = await params; // Await params to get locale
   const t = await getTranslations();
   const title = t("studentProfiles.title");
   const description = t("studentProfiles.description");
-  const ogImage = `https://${baseURL}/og?title=${encodeURIComponent(title)}`;
+  const ogImage = `https://${baseURL}/og-image.jpg`;
 
   return {
     title,

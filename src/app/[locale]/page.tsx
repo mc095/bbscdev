@@ -14,18 +14,18 @@ import { baseURL, routes, renderContent } from "@/app/resources";
 import { Mailchimp } from "@/components";
 import { Posts } from "@/components/blog/Posts";
 import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
-import { useTranslations } from "next-intl";
 
 export async function generateMetadata({
-  params: { locale },
+  params, // Type as Promise
 }: {
-  params: { locale: string };
+  params: Promise<{ locale: string }>; // Awaitable params
 }) {
+  const { locale } = await params; // Await params to get locale
   const t = await getTranslations();
   const { home } = renderContent(t);
   const title = home.title;
   const description = home.description;
-  const ogImage = `https://${baseURL}/og?title=${encodeURIComponent(title)}`;
+  const ogImage = `https://${baseURL}/og-image.jpg`;
 
   return {
     title,
@@ -51,14 +51,16 @@ export async function generateMetadata({
   };
 }
 
-export default function Home({
-  params: { locale },
+export default async function Home({
+  params, // Type as Promise
 }: {
-  params: { locale: string };
+  params: Promise<{ locale: string }>; // Awaitable params
 }) {
+  const { locale } = await params; // Await params to get locale
   unstable_setRequestLocale(locale);
-  const t = useTranslations();
+  const t = await getTranslations(); // Use server-side getTranslations instead of useTranslations
   const { home, about, person, newsletter } = renderContent(t);
+
   return (
     <Flex
       maxWidth="m"
@@ -77,7 +79,7 @@ export default function Home({
             name: home.title,
             description: home.description,
             url: `https://${baseURL}`,
-            image: `${baseURL}/og?title=${encodeURIComponent(home.title)}`,
+            image: `${baseURL}/og-image.jpg`,
             publisher: {
               "@type": "Person",
               name: person.name,
