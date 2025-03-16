@@ -1,3 +1,4 @@
+
 import React from "react";
 
 import {
@@ -14,6 +15,7 @@ import { baseURL, routes, renderContent } from "@/app/resources";
 import { Mailchimp } from "@/components";
 import { Posts } from "@/components/blog/Posts";
 import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
+import { AssistantWrapper } from "@/components/assistant-wrapper";
 
 export async function generateMetadata({
   params, // Type as Promise
@@ -159,6 +161,7 @@ export default async function Home({
       )}
       <Projects range={[2]} locale={locale} />
       {newsletter.display && <Mailchimp newsletter={newsletter} />}
+      <AssistantWrapper />
     </Flex>
   );
 }
