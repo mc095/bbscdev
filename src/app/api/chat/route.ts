@@ -7,7 +7,7 @@ export async function POST(req: NextRequest) {
   const { messages } = await req.json();
   const chatCompletion = await groq.chat.completions.create({
     messages,
-    model: "llama3-8b-8192",
+    model: "llama-3.1-8b-instant",
   });
   return NextResponse.json({
     role: "assistant",
